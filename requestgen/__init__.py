@@ -16,6 +16,7 @@ __all__ = [
     'run_arrival_profile',
     'save_requests',
     'pre_recorded_profile',
+    'concatenate_profiles_and_save'
 ]
 
 
@@ -150,4 +151,18 @@ def save_requests(profile, duration, file: str, env: simpy.Environment = None):
     with open(file, 'wb') as fd:
         df = run_arrival_profile(env, profile(env), until=duration)
         ias = list(df['ia'])
+        pickle.dump(ias, fd)
+
+
+def concatenate_profiles_and_save(file: str, profiles):
+    env = simpy.Environment()
+    dfs = []
+    until = 0
+    for profile, duration in profiles:
+        until += duration
+        df = run_arrival_profile(env, profile(env), until=until)
+        dfs.append(df)
+
+    ias = list(pd.concat(dfs)['ia'])
+    with open(file, 'wb+') as fd:
         pickle.dump(ias, fd)

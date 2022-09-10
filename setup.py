@@ -13,7 +13,7 @@ with open("requirements.txt", "r") as fh:
 
 setuptools.setup(
     name="edgerun-request-generator",
-    version="1.0.1.dev1",
+    version="1.0.1.dev2",
     author="Thomas Rausch, Philipp Raith",
     author_email="t.rausch@dsg.tuwien.ac.at, p.raith@dsg.tuwien.ac.at",
     description="Edge Run Request Generator",
